@@ -77,7 +77,7 @@ app.get('/', (req, res) => {
     res.send({ 'name': 'Server Is On' });
 });
 
-app.get("/login/sucess", async (req, res) => {
+app.get("/login/success", async (req, res) => {
     console.log("Session Data:", req.session);
     console.log("User Data:", req.user);
     if (req.user) {
