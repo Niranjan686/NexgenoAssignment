@@ -93,6 +93,20 @@ app.get("/logout", (req, res, next) => {
     });
 });
 
+app.get("/user/data", async (req, res) => {
+    try {
+        if (req.isAuthenticated() && req.user) {
+            const user = await userdb.findById(req.user._id);
+            res.status(200).json({ user });
+        } else {
+            res.status(401).json({ message: "Not authorized" });
+        }
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error });
+    }
+});
+
+
 app.listen(PORT, () => {
     console.log(`server start at port no ${PORT}`);
 });
