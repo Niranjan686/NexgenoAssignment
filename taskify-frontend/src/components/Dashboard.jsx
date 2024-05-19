@@ -4,19 +4,31 @@ import './Dashboard.css';
 
 const Dashboard = () => {
     const [userdata, setUserdata] = useState({});
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const getUser = async () => {
         try {
             const response = await axios.get("https://taskify-backend-gules.vercel.app/api/userdata", { withCredentials: true });
             setUserdata(response.data.user);
+            setLoading(false);
         } catch (error) {
-            console.log("error", error);
+            setError(error.message);
+            setLoading(false);
         }
     };
 
     useEffect(() => {
         getUser();
     }, []);
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+
+    if (error) {
+        return <p>Error: {error}</p>;
+    }
 
 
         return (
