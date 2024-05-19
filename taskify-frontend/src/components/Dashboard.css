@@ -1,0 +1,38 @@
+.container {
+    max-width: 1200px;
+  }
+  
+  .breadcrumb {
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+  
+  .card {
+    border: none;
+    border-radius: 10px;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  img.rounded-circle {
+    border: 3px solid #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .btn-outline-primary {
+    color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .progress-bar {
+    background-color: #007bff;
+  }
+  
