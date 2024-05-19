@@ -9,16 +9,12 @@ const Dashboard = () => {
 
     const getUser = async () => {
         try {
-            const response = await axios.get("https://taskify-backend-gules.vercel.app/login/success", { withCredentials: true });
-            setUserdata(response.data.user);
+            const response = axios.get("https://taskify-backend-gules.vercel.app/login/success", { withCredentials: true });
+           await setUserdata(response.data.user);
         } catch (error) {
             console.log("error", error);
         }
     };
-    
-
-
-
     useEffect(() => {
         getUser()
     }, [])

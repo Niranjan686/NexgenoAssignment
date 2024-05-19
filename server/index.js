@@ -78,8 +78,7 @@ app.get('/', (req, res) => {
 });
 
 app.get("/login/success", async (req, res) => {
-    console.log("Session Data:", req.session);
-    console.log("User Data:", req.user);
+
     if (req.user) {
         res.status(200).json({ message: "User Login", user: req.user });
     } else {
