@@ -5,16 +5,18 @@ import axios from "axios";
 
 const Headers = () => {
     const [userdata, setUserdata] = useState({});
-    console.log("response", userdata);
-
+    
     const getUser = async () => {
         try {
-            const response = await axios.get("https://taskify-backend-gules.vercel.app/login/success", { withCredentials: true });
-            setUserdata(response.data.user);
+            const response = await axios.get("https://taskify-backend-gules.vercel.app/api/userdata", { withCredentials: true });
+            setUserdata(response.data); // Assuming that response.data directly contains the user data object
         } catch (error) {
             console.log("error", error);
         }
     };
+
+
+    console.log("userdata", userdata);
 
     const logout = () => {
         window.open("https://taskify-backend-gules.vercel.app/logout", "_self");
