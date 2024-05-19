@@ -10,7 +10,7 @@ const Headers = () => {
 
     const getUser = async () => {
         try {
-            const response = await axios.get("http://localhost:1000/login/sucess", { withCredentials: true });
+            const response = await axios.get("https://taskify-backend-gules.vercel.app/login/sucess", { withCredentials: true });
 
             setUserdata(response.data.user)
         } catch (error) {
@@ -20,7 +20,7 @@ const Headers = () => {
 
     // logoout
     const logout = () => {
-        window.open("http://localhost:1000/logout", "_self")
+        window.open("https://taskify-backend-gules.vercel.app/logout", "_self")
     }
 
     useEffect(() => {
