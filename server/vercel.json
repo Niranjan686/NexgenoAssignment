@@ -1,20 +1,16 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "server/index.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "taskify-frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "taskify-frontend/build"
+    "version": 2,
+    "builds": [
+      {
+        "src": "*.js","use":"@vercel/node"
       }
-    }
-  ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/server/index.js" },
-    { "src": "/(.*)", "dest": "taskify-frontend/$1" }
-  ]
-}
+  
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/"
+      }
+    ]
+  }
+  
