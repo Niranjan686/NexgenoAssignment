@@ -14,52 +14,58 @@ const clientsecret = process.env.CLIENTSECRET;
 
 
 app.use(cors({
-    origin:"https://taskify-frontend-rho.vercel.app",
-    methods:"GET,POST,PUT,DELETE",
-    credentials:true
+    origin: "https://taskify-frontend-rho.vercel.app",
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true
 }));
+
 app.use(express.json());
 
 // setup session
 app.use(session({
-    secret:process.env.SECRET,
-    resave:false,
-    saveUninitialized:true
-}))
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        secure: true, // Make sure this is true if you're using HTTPS
+        sameSite: 'none' // Ensure cookies are sent cross-site
+    }
+}));
+
 
 // setuppassport
 app.use(passport.initialize());
 app.use(passport.session());
-
 passport.use(
     new OAuth2Strategy({
-        clientID:clientid,
-        clientSecret:clientsecret,
-        callbackURL:"/auth/google/callback",
-        scope:["profile","email"]
+        clientID: clientid,
+        clientSecret: clientsecret,
+        callbackURL: "https://taskify-backend-gules.vercel.app/auth/google/callback",
+        scope: ["profile", "email"]
     },
-    async(accessToken,refreshToken,profile,done)=>{
+    async (accessToken, refreshToken, profile, done) => {
         try {
-            let user = await userdb.findOne({googleId:profile.id});
+            let user = await userdb.findOne({ googleId: profile.id });
 
-            if(!user){
+            if (!user) {
                 user = new userdb({
-                    googleId:profile.id,
-                    displayName:profile.displayName,
-                    email:profile.emails[0].value,
-                    image:profile.photos[0].value
+                    googleId: profile.id,
+                    displayName: profile.displayName,
+                    email: profile.emails[0].value,
+                    image: profile.photos[0].value
                 });
 
                 await user.save();
             }
 
-            return done(null,user)
+            return done(null, user);
         } catch (error) {
-            return done(error,null)
+            return done(error, null);
         }
     }
     )
-)
+);
+
 
 passport.serializeUser((user,done)=>{
     done(null,user);
@@ -81,14 +87,15 @@ app.get('/',(req,res)=>
 {
     res.send({'name':'Server Is On'});
 })
-app.get("/login/sucess",async(req,res)=>{
-
-    if(req.user){
-        res.status(200).json({message:"user Login",user:req.user})
-    }else{
-        res.status(400).json({message:"Not Authorized"})
+app.get("/login/sucess", async (req, res) => {
+    console.log("User in /login/sucess route:", req.user);
+    if (req.user) {
+        res.status(200).json({ message: "User Login", user: req.user });
+    } else {
+        res.status(400).json({ message: "Not Authorized" });
     }
-})
+});
+
 
 app.get("/logout",(req,res,next)=>{
     req.logout(function(err){
