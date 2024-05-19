@@ -9,7 +9,7 @@ const Dashboard = () => {
         try {
             const response = await axios.get("https://taskify-backend-gules.vercel.app/api/userdata", { withCredentials: true });
             setUserdata(response.data.user);
-            console.log(response.data.user);
+            console.log(response.data.users);
             console.log(userdata);
         } catch (error) {
             console.log("error", error);
