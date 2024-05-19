@@ -8,7 +8,7 @@ const Headers = () => {
     
     const getUser = async () => {
         try {
-            const response = await axios.get("https://taskify-backend-gules.vercel.app/api/userdata", { withCredentials: true });
+            const response = await axios.get("https://taskify-backend-gules.vercel.app/login/sucess", { withCredentials: true });
             setUserdata(response.data); // Assuming that response.data directly contains the user data object
         } catch (error) {
             console.log("error", error);

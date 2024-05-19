@@ -77,7 +77,7 @@ app.get('/', (req, res) => {
     res.send({ 'name': 'Server Is On' });
 });
 
-app.get("/login/success", async (req, res) => {
+app.get("/login/sucess", async (req, res) => {
 
     if (req.user) {
         res.status(200).json({ message: "User Login", user: req.user });

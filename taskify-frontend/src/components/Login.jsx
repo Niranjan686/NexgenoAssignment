@@ -25,10 +25,7 @@ function Login() {
                     <label htmlFor="typeEmailX-2" className="form-label">Email</label>
                     <input type="email" id="typeEmailX-2" className="form-control form-control-lg" placeholder='Email' required />
                   </div>
-                  <div className="form-outline mb-3">
-                    <label htmlFor="typePasswordX-2" className="form-label">Password</label>
-                    <input type="password" id="typePasswordX-2" className="form-control form-control-lg" placeholder='Password' required />
-                  </div>
+      
                   <div className="form-check d-flex justify-content-start mb-3">
                     <input className="form-check-input" type="checkbox" value="" id="form1Example3" />
                     <label className="form-check-label" htmlFor="form1Example3"> Remember password </label>
