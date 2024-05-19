@@ -77,14 +77,16 @@ app.get('/', (req, res) => {
     res.send({ 'name': 'Server Is On' });
 });
 
-app.get("/login/sucess", async (req, res) => {
+// Route to check if user is logged in
+app.get("/login/success",async(req,res)=>{
 
-    if (req.user) {
-        res.status(200).json({ message: "User Login", user: req.user });
-    } else {
-        res.status(400).json({ message: "Not Authorized" });
+    if(req.user){
+        res.status(200).json({message:"user Login",user:req.user})
+    }else{
+        res.status(400).json({message:"Not Authorized"})
     }
-});
+})
+
 app.use('/api', taskRouter);
 
 app.get("/logout", (req, res, next) => {
