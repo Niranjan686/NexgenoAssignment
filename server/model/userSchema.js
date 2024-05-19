@@ -4,8 +4,9 @@ const userSchema = new mongoose.Schema({
     googleId:String,
     displayName:String,
     email:String,
-    image:String
-},{timestamps:true});
+    image:String,
+    timestamp: { type: Date, default: Date.now }
+});
 
 
 const userdb = new mongoose.model("users",userSchema);
