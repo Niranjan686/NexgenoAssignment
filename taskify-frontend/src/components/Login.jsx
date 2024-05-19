@@ -5,7 +5,7 @@ function Login() {
 
 
     const loginwithgoogle = ()=>{
-        window.open("https://taskify-backend-gules.vercel.app/auth/google/callback","_self")
+        window.open("http://taskify-backend-gules.vercel.app/auth/google/callback","_self")
     }
 
   return (
