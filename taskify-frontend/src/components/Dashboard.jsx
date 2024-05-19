@@ -3,19 +3,19 @@ import axios from 'axios';
 import './Dashboard.css';
 
 const Dashboard = () => {
-    const [userdata, setUserdata] = useState({});
-
-    const getUser = async () => {
-        try {
-            const response = await axios.get("https://taskify-backend-gules.vercel.app/user/data", { withCredentials: true });
-            setUserdata(response.data.user);
-        } catch (error) {
-            console.log("error", error);
-        }
-    };
+    const [userdata, setUserData] = useState({});
 
     useEffect(() => {
-        getUser();
+        const fetchData = async () => {
+            try {
+                const response = await axios.get("https://taskify-backend-gules.vercel.app/api/userdata", { withCredentials: true });
+                setUserData(response.data.user);
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        };
+
+        fetchData();
     }, []);
 
     return (

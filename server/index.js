@@ -8,6 +8,7 @@ const session = require("express-session");
 const passport = require("passport");
 const OAuth2Strategy = require("passport-google-oauth2").Strategy;
 const userdb = require("./model/userSchema");
+const taskRouter = require('./routes/userdata');
 
 const clientid = process.env.CLIENTID;
 const clientsecret = process.env.CLIENTSECRET;
@@ -31,7 +32,6 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 passport.use(
     new OAuth2Strategy({
         clientID: clientid,
@@ -85,6 +85,7 @@ app.get("/login/success", async (req, res) => {
         res.status(400).json({ message: "Not Authorized" });
     }
 });
+app.use('/api', taskRouter);
 
 app.get("/logout", (req, res, next) => {
     req.logout(function (err) {
@@ -93,18 +94,7 @@ app.get("/logout", (req, res, next) => {
     });
 });
 
-app.get("/user/data", async (req, res) => {
-    try {
-        if (req.isAuthenticated() && req.user) {
-            const user = await userdb.findById(req.user._id);
-            res.status(200).json({ user });
-        } else {
-            res.status(401).json({ message: "Not authorized" });
-        }
-    } catch (error) {
-        res.status(500).json({ message: "Server error", error });
-    }
-});
+
 
 
 app.listen(PORT, () => {
