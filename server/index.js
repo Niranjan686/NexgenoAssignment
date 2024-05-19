@@ -14,7 +14,7 @@ const clientsecret = process.env.CLIENTSECRET;
 
 
 app.use(cors({
-    origin:"https://taskify-frontend-rho.vercel.app",
+    origin:"*",
     methods:"GET,POST,PUT,DELETE",
     credentials:true
 }));
