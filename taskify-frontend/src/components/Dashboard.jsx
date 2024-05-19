@@ -26,7 +26,7 @@ const Dashboard = () => {
                         <div className="card mb-4">
                             <div className="card-body text-center">
                                 <img 
-                                    src={userdata.image || 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp'} 
+                                    src={ 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp'} 
                                     alt="avatar" 
                                     className="rounded-circle img-fluid" 
                                     style={{ width: '150px' }} 
