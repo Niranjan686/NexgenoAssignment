@@ -15,6 +15,9 @@ const Headers = () => {
         }
     };
 
+    useEffect(() => {
+        getUser();
+    }, []);
 
     console.log("userdata", userdata);
 
@@ -22,9 +25,7 @@ const Headers = () => {
         window.open("https://taskify-backend-gules.vercel.app/logout", "_self");
     };
 
-    useEffect(() => {
-        getUser();
-    }, []);
+
 
     return (
         <>
@@ -35,7 +36,7 @@ const Headers = () => {
                     </div>
                     <div className="right">
                         <ul>
-                            {Object.keys(userdata).length > 0 ? (
+                            {Object.keys(userdata).length  >6 ? (
                                 <>
                                     <li>
                                         <NavLink to="/todo">Home</NavLink>

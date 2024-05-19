@@ -94,6 +94,21 @@ app.get("/logout", (req, res, next) => {
     });
 });
 
+app.get("/api/user/:email", async (req, res) => {
+    try {
+        const email = req.params.email;
+        const user = await userdb.findOne({ email: email });
+
+        if (user) {
+            res.json(user);
+        } else {
+            res.status(404).json({ message: "User not found" });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
 
 
 
