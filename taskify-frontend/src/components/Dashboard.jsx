@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './Dashboard.css'; // Ensure this file has relevant styles
-import NavBar from './NavBar';
-
+import './Dashboard.css';
+import NavBar from './components/NavBar.jsx';
 const Dashboard = () => {
     const [userdata, setUserdata] = useState({});
-    console.log("response", userdata);
-
+    
     const getUser = async () => {
         try {
             const response = await axios.get("https://taskify-backend-gules.vercel.app/api/userdata", { withCredentials: true });
-            setUserdata(response.data.user);
+            setUserdata(response.data); // Assuming that response.data directly contains the user data object
         } catch (error) {
             console.log("error", error);
         }
@@ -35,9 +33,11 @@ const Dashboard = () => {
         getUser();
     }, []);
 
-    return (
-        <>
-            <NavBar />
+    console.log("userdata", userdata);
+
+
+        return (<>
+            <NavBar></NavBar>
             <section style={{ backgroundColor: '#eee' }}>
                 <div className="container py-5">
                     <div className="row">
@@ -45,30 +45,29 @@ const Dashboard = () => {
                             <div className="card mb-4">
                                 <div className="card-body text-center">
                                     <img 
-                                        src={userdata.image || 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp'} 
+                                        src={userdata?.image ?? 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp'} 
                                         alt="avatar" 
                                         className="rounded-circle img-fluid" 
                                         style={{ width: '150px' }} 
                                     />
-                                    <h5 className="my-3">{userdata.displayName || 'John Smith'}</h5>
+                                    <h5 className="my-3">{userdata?.displayName ?? 'John Smith'}</h5>
                                     <p className="text-muted mb-1">Full Stack Developer</p>
                                     <p className="text-muted mb-4">Mumbai, Maharashtra</p>
                                     <div className="d-flex justify-content-center mb-2">
-                    
-                                        <button type="button" className="btn btn-danger ms-2" onClick={deleteUser}>Delete</button>
+                                    <button type="button" className="btn btn-danger ms-2" onClick={deleteUser}>Delete</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className="col-lg-8">
                             <div className="card mb-4">
-                                <div className="card-body">
+                                <div className="card-body profile-info">
                                     <div className="row">
                                         <div className="col-sm-3">
                                             <p className="mb-0">Full Name</p>
                                         </div>
                                         <div className="col-sm-9">
-                                            <p className="text-muted mb-0">{userdata.displayName || 'Johnatan Smith'}</p>
+                                            <p className="text-muted mb-0">{userdata?.displayName ?? 'Johnatan Smith'}</p>
                                         </div>
                                     </div>
                                     <hr />
@@ -77,7 +76,7 @@ const Dashboard = () => {
                                             <p className="mb-0">Email</p>
                                         </div>
                                         <div className="col-sm-9">
-                                            <p className="text-muted mb-0">{userdata.email || 'example@example.com'}</p>
+                                            <p className="text-muted mb-0">{userdata?.email ?? 'example@example.com'}</p>
                                         </div>
                                     </div>
                                     <hr />
@@ -104,8 +103,9 @@ const Dashboard = () => {
                     </div>
                 </div>
             </section>
-        </>
-    );
+            </>
+        );
+           
 };
 
 export default Dashboard;
