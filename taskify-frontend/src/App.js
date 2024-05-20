@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import './App.css';
 import Login from './components/Login.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import NavBar from './components/NavBar.jsx';
+
 import Dashboard from './components/Dashboard.jsx';
 import Error from './components/Error.jsx';
 import Home from './components/Home.jsx';

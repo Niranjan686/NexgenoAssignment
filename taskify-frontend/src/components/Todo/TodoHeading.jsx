@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Todo.css';
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
 import { BsCheckLg } from 'react-icons/bs';
-import NavBar from './components/NavBar.jsx';
+import NavBar from '../NavBar.jsx';
 
 function TodoHeading() {
   const [isCompleteScreen, setIsCompleteScreen] = useState(false);
