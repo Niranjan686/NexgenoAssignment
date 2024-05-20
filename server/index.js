@@ -23,21 +23,20 @@ app.use(express.json());
 app.use(session({
     secret: process.env.SECRET,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: {
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'none'
+        secure: true, // Ensure cookies are only sent over HTTPS
+        sameSite: 'none' // Ensure cookies are sent cross-site
     }
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 passport.use(
     new OAuth2Strategy({
         clientID: clientid,
         clientSecret: clientsecret,
-        callbackURL: "https://taskify-backend-gules.vercel.app/auth/google/callback",
+        callbackURL: "/auth/google/callback",
         scope: ["profile", "email"]
     },
     async (accessToken, refreshToken, profile, done) => {
@@ -60,45 +59,33 @@ passport.use(
 ));
 
 passport.serializeUser((user, done) => {
-    done(null, user.id);
+    done(null, user);
 });
 
-passport.deserializeUser(async (id, done) => {
-    try {
-        const user = await userdb.findById(id);
-        done(null, user);
-    } catch (err) {
-        done(err, null);
-    }
+passport.deserializeUser((user, done) => {
+    done(null, user);
 });
 
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 app.get("/auth/google/callback", passport.authenticate("google", {
-    successRedirect: "https://taskify-frontend-rho.vercel.app/dashboard",
+    successRedirect: "https://taskify-frontend-rho.vercel.app/todo",
     failureRedirect: "https://taskify-frontend-rho.vercel.app/login"
-}), (req, res) => {
-    console.log('User after authentication:', req.user); // Log the user after authentication
-});
+}));
 
 app.get('/', (req, res) => {
     res.send({ 'name': 'Server Is On' });
 });
 
 // Route to check if user is logged in
-app.get("/login/success", async (req, res) => {
-    try {
-        console.log('Checking login success. User:', req.user); // Log the user object
-        if (req.user) {
-            res.status(200).json({ message: "User logged in", user: req.user });
-        } else {
-            res.status(400).json({ message: "Not authorized" });
-        }
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "Internal server error" });
+app.get("/login/success",async(req,res)=>{
+
+    if(req.user){
+        res.status(200).json({message:"user Login",user:req.user})
+    }else{
+        res.status(400).json({message:"Not Authorized"})
     }
-});
+})
 
 app.use('/api', taskRouter);
 
@@ -109,6 +96,24 @@ app.get("/logout", (req, res, next) => {
     });
 });
 
+app.get("/api/user/:email", async (req, res) => {
+    try {
+        const email = req.params.email;
+        const user = await userdb.findOne({ email: email });
+
+        if (user) {
+            res.json(user);
+        } else {
+            res.status(404).json({ message: "User not found" });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+
+
 app.listen(PORT, () => {
-    console.log(`Server started at port no ${PORT}`);
+    console.log(`server start at port no ${PORT}`);
 });

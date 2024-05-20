@@ -7,7 +7,7 @@ const Dashboard = () => {
     
     const getUser = async () => {
         try {
-            const response = await axios.get("https://taskify-backend-gules.vercel.app/login/success", { withCredentials: true });
+            const response = await axios.get("https://taskify-backend-gules.vercel.app/api/userdata", { withCredentials: true });
             setUserdata(response.data); // Assuming that response.data directly contains the user data object
         } catch (error) {
             console.log("error", error);
