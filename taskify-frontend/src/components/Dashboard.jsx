@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Dashboard.css';
-import NavBar from './components/NavBar.jsx';
+
 const Dashboard = () => {
     const [userdata, setUserdata] = useState({});
     
@@ -14,21 +14,6 @@ const Dashboard = () => {
         }
     };
 
-    const deleteUser = async () => {
-        try {
-            const response = await axios.delete("https://taskify-backend-gules.vercel.app/api/user", {
-                data: { email: userdata.email },
-                withCredentials: true
-            });
-            if (response.status === 200) {
-                setUserdata({});
-                window.open("https://taskify-backend-gules.vercel.app/logout", "_self");
-            }
-        } catch (error) {
-            console.log("error", error);
-        }
-    };
-
     useEffect(() => {
         getUser();
     }, []);
@@ -36,8 +21,11 @@ const Dashboard = () => {
     console.log("userdata", userdata);
 
 
-        return (<>
+        return (
+            <>
+
             <NavBar></NavBar>
+            
             <section style={{ backgroundColor: '#eee' }}>
                 <div className="container py-5">
                     <div className="row">
