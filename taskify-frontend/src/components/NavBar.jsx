@@ -36,8 +36,7 @@ const Headers = () => {
                     </div>
                     <div className="right">
                         <ul>
-                            {Object.keys(userdata).length > 0 ? (
-                                <>
+                           
                                     <li>
                                         <NavLink to="/todo">Home</NavLink>
                                     </li>
@@ -45,8 +44,7 @@ const Headers = () => {
                                         <NavLink to="/dashboard">Profile</NavLink>
                                     </li>
                                     <li onClick={logout}>Logout</li>
-                                </>
-                            ) : <p></p>}
+                                
                         </ul>
                     </div>
                 </nav>
