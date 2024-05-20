@@ -87,6 +87,21 @@ app.get("/login/success",async(req,res)=>{
     }
 })
 
+// In your backend (e.g., app.js or routes/userdata.js)
+app.delete('/api/user', async (req, res) => {
+    const { email } = req.body;
+    try {
+        const user = await userdb.findOneAndDelete({ email });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json({ message: 'User deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Internal server error', error });
+    }
+});
+
+
 app.use('/api', taskRouter);
 
 app.get("/logout", (req, res, next) => {
