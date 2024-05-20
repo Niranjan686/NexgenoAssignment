@@ -21,7 +21,7 @@ const Home = () => {
               Become focused, organized, and calm with <br />
               todo app. The World's #1 task manager app.
             </p>
-            <button className="home-btn p-2" onClick={handleNavigation}>Login to Start</button>  
+            <button className="home-btn p-2" onClick={handleNavigation}>Manage</button>  
           </div>
         </div>
       </div>
