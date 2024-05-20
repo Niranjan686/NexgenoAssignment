@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Todo.css';
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
 import { BsCheckLg } from 'react-icons/bs';
+import NavBar from '../components/NavBar.jsx';
 
 function TodoHeading() {
   const [isCompleteScreen, setIsCompleteScreen] = useState(false);
@@ -106,6 +107,8 @@ function TodoHeading() {
   };
 
   return (
+    <>
+    <NavBar></NavBar>
     <div className="App">
       <h1>My Todos</h1>
 
@@ -240,6 +243,7 @@ function TodoHeading() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
