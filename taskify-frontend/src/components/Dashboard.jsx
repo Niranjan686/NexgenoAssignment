@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Dashboard.css';
-import NavBar from './components/NavBar.jsx';
+import NavBar from './NavBar.jsx';
 const Dashboard = () => {
     const [userdata, setUserdata] = useState({});
     
