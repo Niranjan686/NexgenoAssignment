@@ -36,7 +36,7 @@ passport.use(
     new OAuth2Strategy({
         clientID: clientid,
         clientSecret: clientsecret,
-        callbackURL: "https://taskify-backend-gules.vercel.app/auth/google/callback",
+        callbackURL: "/auth/google/callback",
         scope: ["profile", "email"]
     },
     async (accessToken, refreshToken, profile, done) => {
@@ -69,7 +69,7 @@ passport.deserializeUser((user, done) => {
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 app.get("/auth/google/callback", passport.authenticate("google", {
-    successRedirect: "https://taskify-frontend-rho.vercel.app/dashboard",
+    successRedirect: "https://taskify-frontend-rho.vercel.app/todo",
     failureRedirect: "https://taskify-frontend-rho.vercel.app/login"
 }));
 
@@ -78,14 +78,19 @@ app.get('/', (req, res) => {
 });
 
 // Route to check if user is logged in
-app.get("/login",async(req,res)=>{
-
-    if(req.user){
-        res.status(200).json({message:"user Login",user:req.user})
-    }else{
-        res.status(400).json({message:"Not Authorized"})
+app.get("/login/success", async (req, res) => {
+    try {
+        if (req.user) {
+            res.status(200).json({ message: "User logged in", user: req.user });
+        } else {
+            res.status(400).json({ message: "Not authorized" });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Internal server error" });
     }
-})
+});
+
 
 app.use('/api', taskRouter);
 
