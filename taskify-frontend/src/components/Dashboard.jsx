@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './Dashboard.css'; // Ensure this file has relevant styles
-import NavBar from './NavBar';
-
+import './Dashboard.css';
+import NavBar from './components/NavBar.jsx';
 const Dashboard = () => {
-    const [userdata, setUserdata] = useState(null); // Initialize userdata as null
-    console.log("response", userdata);
-
+    const [userdata, setUserdata] = useState({});
+    
     const getUser = async () => {
         try {
-            const response = await axios.get("http://localhost:1000/login/success", { withCredentials: true });
-            setUserdata(response.data.user);
+            const response = await axios.get("https://taskify-backend-gules.vercel.app/api/userdata", { withCredentials: true });
+            setUserdata(response.data); // Assuming that response.data directly contains the user data object
         } catch (error) {
             console.log("error", error);
         }
@@ -18,13 +16,13 @@ const Dashboard = () => {
 
     const deleteUser = async () => {
         try {
-            const response = await axios.delete("http://localhost:1000/api/user", {
-                data: { email: userdata?.email },
+            const response = await axios.delete("https://taskify-backend-gules.vercel.app/api/user", {
+                data: { email: userdata.email },
                 withCredentials: true
             });
             if (response.status === 200) {
-                setUserdata(null);
-                window.open("http://localhost:1000/logout", "_self");
+                setUserdata({});
+                window.open("https://taskify-backend-gules.vercel.app/logout", "_self");
             }
         } catch (error) {
             console.log("error", error);
@@ -35,13 +33,11 @@ const Dashboard = () => {
         getUser();
     }, []);
 
-    if (!userdata) {
-        return <div>Loading...</div>; // Add a loading state while fetching user data
-    }
+    console.log("userdata", userdata);
 
-    return (
-        <>
-            <NavBar />
+
+        return (<>
+            <NavBar></NavBar>
             <section style={{ backgroundColor: '#eee' }}>
                 <div className="container py-5">
                     <div className="row">
@@ -59,14 +55,13 @@ const Dashboard = () => {
                                     <p className="text-muted mb-4">Mumbai, Maharashtra</p>
                                     <div className="d-flex justify-content-center mb-2">
                                         <button type="button" className="btn btn-primary">Edit</button>
-                                        <button type="button" className="btn btn-danger ms-2" onClick={deleteUser}>Delete</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className="col-lg-8">
                             <div className="card mb-4">
-                                <div className="card-body">
+                                <div className="card-body profile-info">
                                     <div className="row">
                                         <div className="col-sm-3">
                                             <p className="mb-0">Full Name</p>
@@ -108,8 +103,9 @@ const Dashboard = () => {
                     </div>
                 </div>
             </section>
-        </>
-    );
+            </>
+        );
+           
 };
 
 export default Dashboard;
